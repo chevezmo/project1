@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimbursement Request Form</title>
+</head>
+<body>
+    <h1>Reimbursement Request</h1>
+
+    <form actions="/submit_request" method="post">
+        
+        <textarea id="description" name="description" placeholder="Description" rows="3" cols="50" maxlength="100" required="required"></textarea><br><br>
+
+        <input type="number" id="amount" name="amount" placeholder="Amount" min="1" max="1000" step =".01" required="required"><br><br>
+
+        
+        <fieldset>
+
+            <legend>Expense Type</legend>
+
+            <input type="radio" id="travel" name="category" value="Travel" required="required">
+            <label for="travel">Travel</label><br>
+    
+            <input type="radio" id="education" name="category" value="Education or Training" required="required">
+            <label for="education">Education or Training</label><br>
+    
+            <input type="radio" id="supplies" name="category" value="Supplies or Tools" required="required">
+            <label for="supplies">Supplies or Tools</label><br>
+    
+            <input type="radio" id="miscellaneous" name="category" value="Miscellaneous" required="required">
+            <label for="miscellaneous">Miscellaneous</label>
+
+        </fieldset><br>
+
+
+        <input type="submit" value="Submit">
+        <!-- Confirm description and amount meet requirements.
+             If correct, notify user that request has been submitted.
+             Otherwise, notify user about errors.-->
+
+        <input type="button" value="Back" onclick="history.back()">
+    </form>
+
+</body>
+</html>

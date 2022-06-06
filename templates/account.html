@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page</title>
+</head>
+<body>
+    <h1>Account: </h1>
+
+    <input type="button" value="Submit Reimbursement Request" onclick="location.href='/request';"><br><br>
+    
+    <input type="button" value="View Current and Previous Requests" onclick="location.href='/history';"><br><br>
+
+    <input type="button" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
+    <!-- only displayed for managers -->
+
+    <input type="button" value="Sign Out" onclick="location.href='/login';"> <!-- ensure user is signed out and taken back to the home page. -->
+    
+</body>
+</html>

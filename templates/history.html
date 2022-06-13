@@ -19,19 +19,49 @@
             <th>Amount</th>
             <th>Expense Type</th>
             <th>Status</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-            {% for item in data %}
+            {% for item in history %}
                 <tr>
                     <td>{{item[2]}}</td>
                     <td>{{item[3]}}</td>
                     <td>{{item[4]}}</td>
                     <td>{{item[5]}}</td>
+                    <td><button type ="button">Cancel</button></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Statistics</th>
+        </tr>
+        <tr>
+            <th>Requests</th>
+            <th>Pending</th>
+            <th>Approved</th>
+            <th>Rejected</th>
+            <th>Cancelled</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for stat in stats %}
+                <tr>
+                    <td>{{stat[0]}}</td>
+                    <td>{{stat[1]}}</td>
+                    <td>{{stat[2]}}</td>
+                    <td>{{stat[3]}}</td>
+                    <td>{{stat[4]}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 
     <input type="button" value="Back" onclick="history.back()">
 

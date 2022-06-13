@@ -1,38 +1,69 @@
-from flask import Flask, request, render_template, redirect
-from repository.database import check_user_info, create_user, get_history, submit_request
+from flask import Flask, session, request, render_template, redirect
+from flask_session.__init__ import Session
+from repository.database import check_user_info, create_user, get_history, get_requests, submit_request, get_stats
 
 app = Flask(__name__)
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
+
+@app.route('/set/')
+def set():
+    session['key'] = 'value'
+    return 'ok'
+
+@app.route('/get/')
+def get():
+    return session.get('key', 'not set')
 
 @app.route('/')
 def login():
+    session.clear()
     return redirect('http://127.0.0.1:5000/login')
 
 @app.route('/account')
 def account():
-    return render_template('account.html')
+    if 'user_id' in session:
+        manager = session.get('Manager',None)
+        return render_template('account.html', data = manager)
+    return redirect('http://127.0.0.1:5000/')
 
 @app.route('/request', methods=['GET', 'POST'])
 def reimbursement():
-    if request.method == 'POST':
-        submit_request(current_user, request.form)
-        return redirect('http://127.0.0.1:5000/account')
-    return render_template('request.html')
+    if 'user_id' in session:
+        if request.method == 'POST':
+            submit_request(session['user_id'], request.form)
+            return redirect('http://127.0.0.1:5000/account')
+        return render_template('request.html')
+    return redirect('http://127.0.0.1:5000/')
+
 
 @app.route('/history')
 def history():
-    data = get_history(current_user)
-    return render_template('history.html', data = data)
+    if 'user_id' in session:
+        history = get_history(session['user_id'])
+        stats = get_stats(session['user_id'])
+        if history and stats:
+            return render_template('history.html', history = history, stats = stats)
+        return render_template('history.html')
+    return redirect('http://127.0.0.1:5000/')
 
 @app.route('/approval')
 def approval():
-    return render_template('approval.html')
+    if 'user_id' in session:
+        if session['manager']:
+            data = get_requests(session['user_id'])
+            if data:
+                return render_template('approval.html', data = data)
+            return render_template('approval.html')
+        return redirect('http://127.0.0.1:5000/account')
+    return redirect('http://127.0.0.1:5000/')
 
 @app.route('/login' , methods=['GET', 'POST'])
 def confirm_user():
     if request.method == 'POST':
         if check_user_info(request.form):
-            global current_user
-            current_user = create_user(request.form)
+            create_user(request.form)
             return redirect('http://127.0.0.1:5000/account')
     return render_template('login.html')
 

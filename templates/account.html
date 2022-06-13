@@ -13,10 +13,17 @@
     
     <input type="button" value="View Current and Previous Requests" onclick="location.href='/history';"><br><br>
 
-    <input type="button" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
+    <input type="button" id="approval" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
     <!-- only displayed for managers -->
 
-    <input type="button" value="Sign Out" onclick="location.href='/login';"> <!-- ensure user is signed out and taken back to the home page. -->
-    
+    <input type="button" value="Sign Out" onclick="location.href='/';"> <!-- ensure user is signed out and taken back to the home page. -->
+    <!--
+    <script>
+    window.onload = function(){
+        document.getElementById("approval").style.visibility = 'hidden';
+    };
+    </script>
+    -->
+
 </body>
 </html>

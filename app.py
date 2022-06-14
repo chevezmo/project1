@@ -24,8 +24,8 @@ def login():
 @app.route('/account')
 def account():
     if 'user_id' in session:
-        manager = session.get('Manager',None)
-        return render_template('account.html', data = manager)
+        manager = session.get('manager',None)
+        return render_template('account.html', manager = manager)
     return redirect('http://127.0.0.1:5000/')
 
 @app.route('/request', methods=['GET', 'POST'])

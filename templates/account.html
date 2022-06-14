@@ -13,7 +13,9 @@
     
     <input type="button" value="View Current and Previous Requests" onclick="location.href='/history';"><br><br>
 
-    <input type="button" id="approval" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
+    {% if manager == true %}
+        <input type="button" id="approval" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
+    {% endif %}
     <!-- only displayed for managers -->
 
     <input type="button" value="Sign Out" onclick="location.href='/';"> <!-- ensure user is signed out and taken back to the home page. -->

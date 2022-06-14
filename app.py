@@ -38,9 +38,12 @@ def reimbursement():
     return redirect('http://127.0.0.1:5000/')
 
 
-@app.route('/history')
+@app.route('/history', methods = ['GET', 'POST'])
 def history():
     if 'user_id' in session:
+        if request.method == 'POST':
+            if request.form.get('cancel'):
+                change_request_status(request.form.get('cancel'), 'Cancelled')
         history = get_history(session['user_id'])
         stats = get_stats(session['user_id'])
         if history and stats:

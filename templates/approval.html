@@ -31,13 +31,23 @@
                     <td>{{item[3]}}</td>
                     <td>{{item[4]}}</td>
                     <td>{{item[5]}}</td>
-                    <td><button type ="button">Approve</button></td>
-                    <td><button type ="button">Reject</button></td>
+                    <td>
+                        <form action="/approval", method="POST">
+                            <input type="hidden" name="approve" value="{{item[6]}}">
+                            <button type ="submit">Approve</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/approval", method="POST">
+                            <input type="hidden" name="reject" value="{{item[6]}}">
+                            <button type ="submit">Reject</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
-            
+
         </tfoot>
     </table>
     

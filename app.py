@@ -1,6 +1,6 @@
 from flask import Flask, session, request, render_template, redirect
 from flask_session.__init__ import Session
-from repository.database import check_user_info, create_user, get_history, get_requests, submit_request, get_stats
+from repository.database import check_user_info, create_user, get_history, get_requests, submit_request, get_stats, change_request_status
 
 app = Flask(__name__)
 SESSION_TYPE = 'filesystem'
@@ -48,10 +48,15 @@ def history():
         return render_template('history.html')
     return redirect('http://127.0.0.1:5000/')
 
-@app.route('/approval')
+@app.route('/approval', methods=['GET', 'POST'])
 def approval():
     if 'user_id' in session:
         if session['manager']:
+            if request.method == 'POST':
+                if request.form.get('approve'):
+                    change_request_status(request.form.get('approve'), 'Approved')
+                if request.form.get('reject'):
+                    change_request_status(request.form.get('reject'), 'Rejected')
             data = get_requests(session['user_id'])
             if data:
                 return render_template('approval.html', data = data)

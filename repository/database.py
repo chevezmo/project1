@@ -39,8 +39,7 @@ def get_user_info(username):
         if connection is not None:
             connection.close()
 
-
-def submit_request(user_id, form):
+def submit_request(user_id: int, form):
     description = form.get('description')
     amount = form.get('amount')
     expense_type = form.get('category')
@@ -58,7 +57,7 @@ def submit_request(user_id, form):
         if connection is not None:
             connection.close()
 
-def get_history(user_id):
+def get_history(user_id: int):
     try:
         connection = get_connection()
         cursor = connection.cursor()
@@ -74,7 +73,7 @@ def get_history(user_id):
         if connection is not None:
             connection.close()
 
-def get_requests(user_id):
+def get_requests(user_id: int):
     try:
         connection = get_connection()
         cursor = connection.cursor()
@@ -83,7 +82,7 @@ def get_requests(user_id):
         SELECT users.first_name, users.last_name, requests.description, requests.amount, requests.expense_type, requests.status, requests.request_id
         FROM requests
         JOIN users ON requests.user_id = users.user_id
-        WHERE requests.user_id <> '{user_id}';
+        WHERE requests.user_id <> '{user_id}' and requests.status = 'Pending';
         """
         cursor.execute(qry)
         records = cursor.fetchall()
@@ -95,7 +94,7 @@ def get_requests(user_id):
         if connection is not None:
             connection.close()
 
-def get_stats(user_id):
+def get_stats(user_id: int):
     try:
         connection = get_connection()
         cursor = connection.cursor()
@@ -117,6 +116,26 @@ def get_stats(user_id):
             return stats
     except:
         print("No stats available")
+    finally:
+        if connection is not None:
+            connection.close()
+
+def change_request_status(request_id: int, new_status):
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        qry = f"""
+        UPDATE requests
+        SET "status" = '{new_status}'
+        WHERE request_id = '{request_id}';
+        """
+
+        cursor.execute(qry)
+        connection.commit()
+    except:
+        connection.rollback()
+        print("Unable to submit Request")
     finally:
         if connection is not None:
             connection.close()

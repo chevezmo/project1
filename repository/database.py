@@ -19,8 +19,7 @@ def create_user(form):
     username = form.get('username')
     user_id, first_name, last_name, manager = get_user_info(username)
     session['user_id'] = user_id
-    session['first_name'] = first_name
-    session['last_name'] = last_name
+    session['name'] = f"{first_name} {last_name}"
     session['manager'] = manager
 
 def get_user_info(username):
@@ -50,9 +49,11 @@ def submit_request(user_id: int, form):
         qry = "INSERT INTO requests VALUES (default, %s, %s, %s, %s, %s);"
         cursor.execute(qry,(user_id, description, amount, expense_type, 'Pending'))
         connection.commit()
+        return True
     except:
         connection.rollback()
         print("Unable to submit request")
+        return False
     finally:
         if connection is not None:
             connection.close()
@@ -62,7 +63,12 @@ def get_history(user_id: int):
         connection = get_connection()
         cursor = connection.cursor()
 
-        qry = f"SELECT * FROM requests WHERE user_id = '{user_id}';"
+        qry = f"""
+        SELECT *
+        FROM requests
+        WHERE user_id = '{user_id}'
+        ORDER BY status DESC;
+        """
         cursor.execute(qry)
         records = cursor.fetchall()
         if records:

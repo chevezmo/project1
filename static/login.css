@@ -1,0 +1,16 @@
+span {
+    color: #1DA1F2;
+    font-family: sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    place-items: center;
+    overflow: hidden;
+    font-family: sans-serif;
+}

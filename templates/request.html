@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='request.css')}}">
     <title>Reimbursement Request Form</title>
 </head>
 <body>
-    <h1>Reimbursement Request</h1>
 
     <form actions="/request" , method="POST">
+
+        <span>Reimbursement Request</span><br><br>
         
         <textarea id="description" name="description" placeholder="Description" rows="3" cols="50" maxlength="100" required="required"></textarea><br><br>
 
@@ -35,12 +37,19 @@
         </fieldset><br>
 
 
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id = "submit_request">
         <!-- Confirm description and amount meet requirements.
              If correct, notify user that request has been submitted.
              Otherwise, notify user about errors.-->
 
-        <input type="button" value="Back" onclick="location.href='/account';">
+        <input type="button" value="Back" id="request_back" onclick="location.href='/account';">
+        
+        {% if submitted == true %}
+            <h2>Request Submitted!</h2>
+        {% elif submitted == false %}
+            <h2>Request was unable to be submitted.</h2>
+        {% endif %}
+        
     </form>
 
 </body>

@@ -4,28 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='account.css')}}">
     <title>Account Page</title>
 </head>
 <body>
-    <h1>Account: </h1>
+    <h1>{{name}}</h1>
 
-    <input type="button" value="Submit Reimbursement Request" onclick="location.href='/request';"><br><br>
+    <input type="button" id="request" value="Submit Reimbursement Request" onclick="location.href='/request';"><br><br>
     
-    <input type="button" value="View Current and Previous Requests" onclick="location.href='/history';"><br><br>
+    <input type="button" id="history" value="View Current and Previous Requests" onclick="location.href='/history';"><br><br>
 
     {% if manager == true %}
         <input type="button" id="approval" value="Approve/Decline Reimbursement Requests" onclick="location.href='/approval';"><br><br>
     {% endif %}
     <!-- only displayed for managers -->
 
-    <input type="button" value="Sign Out" onclick="location.href='/';"> <!-- ensure user is signed out and taken back to the home page. -->
-    <!--
-    <script>
-    window.onload = function(){
-        document.getElementById("approval").style.visibility = 'hidden';
-    };
-    </script>
-    -->
+    <input type="button" id="sign_out" value="Sign Out" onclick="location.href='/';"> <!-- ensure user is signed out and taken back to the home page. -->
 
 </body>
 </html>

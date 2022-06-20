@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='table.css')}}">
     <title>Approval or Denial of Requests</title>
 </head>
 <body>
     <h1>Pending Reimbursement Requests for Approval</h1>
 
-    <table>
+    <table class="styled-table">
         <thead>
         <tr>
             <th>First Name</th>
@@ -34,13 +35,13 @@
                     <td>
                         <form action="/approval", method="POST">
                             <input type="hidden" name="approve" value="{{item[6]}}">
-                            <button type ="submit">Approve</button>
+                            <button type ="submit" id="approve{{item[6]}}">Approve</button>
                         </form>
                     </td>
                     <td>
                         <form action="/approval", method="POST">
                             <input type="hidden" name="reject" value="{{item[6]}}">
-                            <button type ="submit">Reject</button>
+                            <button type ="submit" id="reject{{item[6]}}">Reject</button>
                         </form>
                     </td>
                 </tr>
@@ -53,6 +54,6 @@
     
     <!-- Show pending reimbursement requests. Managers must be unable to do their own.-->
 
-    <input type="button" value="Back" onclick="location.href='/account';">
+    <input type="button" value="Back" id = "approval_back" onclick="location.href='/account';">
 </body>
 </html>

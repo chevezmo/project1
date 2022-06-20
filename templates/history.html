@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='history.css')}}">
     <title>Request History</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
     <!-- View Current and Previous Requests.
          With option of canceling current requests.
          Statistics of requests. -->
-    <table>
+    <table class = "styled-table">
         <thead>
         <tr>
             <th>Description</th>
@@ -33,20 +34,17 @@
                     <td>
                         <form action="/history", method="POST">
                             <input type="hidden" name="cancel" value="{{item[0]}}">
-                            <button type ="submit">Cancel</button>
+                            <button type ="submit" id = "cancel{{item[0]}}">Cancel</button>
                         </form>
                     </td>
                     {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table><br>
 
-    <table>
+    <table class = "styled-table">
         <thead>
-        <tr>
-            <th>Statistics</th>
-        </tr>
         <tr>
             <th>Requests</th>
             <th>Pending</th>
@@ -70,7 +68,7 @@
 
 
 
-    <input type="button" value="Back" onclick="location.href='/account';">
+    <input type="button" value="Back" id="history_back" onclick="location.href='/account';">
 
 </body>
 </html>
